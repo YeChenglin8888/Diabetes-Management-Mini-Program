@@ -46,3 +46,22 @@ class DietSaveRequest(BaseModel):
     mealTime: str
     items: list[DietItemRequest]
     remark: str | None = None
+
+
+class WeeklyAnalysisRequest(BaseModel):
+    userId: int
+    weekStart: str
+    weekEnd: str
+
+
+class AiChatMessage(BaseModel):
+    role: str
+    content: str
+
+
+class AiChatRequest(BaseModel):
+    userId: int
+    question: str = Field(min_length=1, max_length=500)
+    weekStart: str | None = None
+    weekEnd: str | None = None
+    history: list[AiChatMessage] = Field(default_factory=list)

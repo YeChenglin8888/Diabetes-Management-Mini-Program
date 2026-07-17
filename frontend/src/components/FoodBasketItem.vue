@@ -3,7 +3,15 @@
     <view class="food-mark">{{ index + 1 }}</view>
     <view class="food-main">
       <text class="food-name">{{ item.foodName }}</text>
-      <text class="food-meta">{{ item.weightG }}g · {{ item.carbValue }}g 碳水</text>
+      <text class="food-meta">
+        {{ item.weightG }}g · {{ item.carbValue }}g 碳水 · {{ item.proteinValue || 0 }}g 蛋白
+      </text>
+      <view class="nutrition-row">
+        <text class="tag">{{ item.carbType || '混合碳' }}</text>
+        <text class="tag muted">GI {{ item.giLevel || '低' }}</text>
+        <text class="tag muted">脂肪 {{ item.fatValue || 0 }}g</text>
+        <text class="tag muted">纤维 {{ item.fiberValue || 0 }}g</text>
+      </view>
     </view>
     <text class="remove" @tap="$emit('remove')">移除</text>
   </view>
@@ -62,6 +70,24 @@ defineEmits(['remove'])
   margin-top: 6rpx;
   color: #7b8578;
   font-size: 24rpx;
+}
+.nutrition-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8rpx;
+  margin-top: 12rpx;
+}
+.tag {
+  padding: 5rpx 12rpx;
+  border-radius: 999rpx;
+  background: #fff0d9;
+  color: #b46b20;
+  font-size: 21rpx;
+  font-weight: 800;
+}
+.tag.muted {
+  background: #f3f6ef;
+  color: #6c7769;
 }
 .remove {
   color: #bd4a38;

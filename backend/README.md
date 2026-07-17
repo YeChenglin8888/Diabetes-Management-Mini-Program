@@ -30,3 +30,21 @@ http://127.0.0.1:8000/docs
 ```text
 http://127.0.0.1:8000/api/health
 ```
+
+## AI 周报解读配置
+
+后端通过 OpenAI 兼容格式调用 New API 网关，API Key 只配置在 `.env`，不要写到前端代码中：
+
+```env
+AI_API_BASE=https://yunying.jieyisoft.com:30170
+AI_CHAT_PATH=/v1/chat/completions
+AI_API_KEY=你的Key
+AI_MODEL=deepseek-v4-pro
+AI_TIMEOUT_SECONDS=30
+```
+
+配置后重启后端，可访问以下接口检查是否读取成功：
+
+```text
+http://127.0.0.1:8000/api/ai/config
+```

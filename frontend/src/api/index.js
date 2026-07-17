@@ -6,12 +6,18 @@ export const api = {
   login: (data) => request('/auth/login', { method: 'POST', data }),
   listGlucose: (params) => request(`/glucose?${toQuery(params)}`),
   createGlucose: (data) => request('/glucose', { method: 'POST', data }),
+  updateGlucose: (recordId, data) => request(`/glucose/${recordId}`, { method: 'PUT', data }),
+  deleteGlucose: (recordId) => request(`/glucose/${recordId}`, { method: 'DELETE' }),
   listFoods: (params = {}) => request(`/foods?${toQuery(params)}`),
   calculateDiet: (data) => request('/diets/calculate', { method: 'POST', data }),
+  listDiets: (params = {}) => request(`/diets?${toQuery(params)}`),
   saveDiet: (data) => request('/diets', { method: 'POST', data }),
   listRecipes: (params = {}) => request(`/recipes?${toQuery(params)}`),
   getRecipe: (recipeId) => request(`/recipes/${recipeId}`),
-  getWeeklyReport: (params) => request(`/reports/weekly?${toQuery(params)}`)
+  getWeeklyReport: (params) => request(`/reports/weekly?${toQuery(params)}`),
+  getAiConfig: () => request('/ai/config'),
+  generateWeeklyAnalysis: (data) => request('/ai/reports/weekly-analysis', { method: 'POST', data }),
+  chatWithAi: (data) => request('/ai/chat', { method: 'POST', data })
 }
 
 function toQuery(params = {}) {

@@ -1,6 +1,6 @@
 from decimal import Decimal
 
-from app.utils import build_weekly_suggestion, glucose_status, money2
+from app.utils import build_weekly_suggestion, glucose_status, money2, nutrition_value
 
 
 def test_glucose_status_rules():
@@ -12,8 +12,10 @@ def test_glucose_status_rules():
 
 def test_carb_rounding_formula():
     assert money2(Decimal("40") / Decimal("100") * Decimal("66.90")) == Decimal("26.76")
+    assert nutrition_value(Decimal("16.90"), Decimal("40")) == Decimal("6.76")
 
 
 def test_weekly_suggestion_priority():
     assert "低血糖" in build_weekly_suggestion(3, 1, Decimal("120"))
     assert "偏高" in build_weekly_suggestion(2, 0, Decimal("120"))
+    assert "快碳" in build_weekly_suggestion(0, 0, Decimal("120"), Decimal("130"))

@@ -60,7 +60,8 @@ watch(
 function draw() {
   if (!hasData.value) return
   nextTick(() => {
-    const width = uni.getSystemInfoSync().windowWidth - 56
+    const windowInfo = typeof uni.getWindowInfo === 'function' ? uni.getWindowInfo() : uni.getSystemInfoSync()
+    const width = windowInfo.windowWidth - 56
     const context = uni.createCanvasContext(canvasId, instance?.proxy)
     chart = new uCharts({
       type: props.chartType,

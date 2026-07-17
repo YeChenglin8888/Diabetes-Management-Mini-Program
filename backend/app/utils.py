@@ -45,6 +45,10 @@ def money2(value: Decimal | float | int) -> Decimal:
     return Decimal(str(value)).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
 
 
+def nutrition_value(per_100g: Decimal | float | int, weight_g: Decimal | float | int) -> Decimal:
+    return money2(Decimal(str(weight_g)) / Decimal("100") * Decimal(str(per_100g or 0)))
+
+
 def glucose_status(measure_type: str, glucose_value: Decimal | float) -> str:
     value = Decimal(str(glucose_value))
     if value < Decimal("3.9"):
@@ -56,11 +60,18 @@ def glucose_status(measure_type: str, glucose_value: Decimal | float) -> str:
     return "正常"
 
 
-def build_weekly_suggestion(high_count: int, low_count: int, avg_daily_carb: Decimal) -> str:
+def build_weekly_suggestion(
+    high_count: int,
+    low_count: int,
+    avg_daily_carb: Decimal,
+    fast_carb_total: Decimal = Decimal("0"),
+) -> str:
     if low_count > 0:
         return "本周存在低血糖记录，建议关注低血糖风险，必要时及时补充碳水并咨询医生。"
     if high_count >= 2:
         return "本周血糖偏高次数较多，建议减少精制主食、甜食和含糖饮料摄入。"
+    if fast_carb_total > Decimal("120"):
+        return "本周快碳摄入偏多，建议把精制主食、甜食替换为全谷物、蔬菜和优质蛋白搭配。"
     if avg_daily_carb > Decimal("180"):
         return "本周日均碳水摄入偏高，建议增加蔬菜和优质蛋白比例，控制主食重量。"
     return "本周血糖整体较稳定，建议继续保持规律饮食和持续记录。"

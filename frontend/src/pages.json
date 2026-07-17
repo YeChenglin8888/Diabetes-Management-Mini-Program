@@ -55,6 +55,12 @@
       }
     },
     {
+      "path": "pages/ai/chat",
+      "style": {
+        "navigationBarTitleText": "AI 对话"
+      }
+    },
+    {
       "path": "pages/profile/index",
       "style": {
         "navigationBarTitleText": "个人中心"
@@ -68,23 +74,33 @@
     "list": [
       {
         "pagePath": "pages/home/index",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/glucose/index",
-        "text": "血糖"
+        "text": "首页",
+        "iconPath": "static/tabbar/home.png",
+        "selectedIconPath": "static/tabbar/home-active.png"
       },
       {
         "pagePath": "pages/diet/index",
-        "text": "饮食"
+        "text": "饮食",
+        "iconPath": "static/tabbar/diet.png",
+        "selectedIconPath": "static/tabbar/diet-active.png"
       },
       {
         "pagePath": "pages/reports/index",
-        "text": "周报"
+        "text": "周报",
+        "iconPath": "static/tabbar/reports.png",
+        "selectedIconPath": "static/tabbar/reports-active.png"
+      },
+      {
+        "pagePath": "pages/ai/chat",
+        "text": "AI",
+        "iconPath": "static/tabbar/reports.png",
+        "selectedIconPath": "static/tabbar/reports-active.png"
       },
       {
         "pagePath": "pages/profile/index",
-        "text": "我的"
+        "text": "我的",
+        "iconPath": "static/tabbar/profile.png",
+        "selectedIconPath": "static/tabbar/profile-active.png"
       }
     ]
   }

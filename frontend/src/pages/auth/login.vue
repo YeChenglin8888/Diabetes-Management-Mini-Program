@@ -1,11 +1,17 @@
 <template>
   <view class="page auth-page">
     <view class="hero">
-      <text class="title">糖尿病饮食血糖管理</text>
-      <text class="subtle">记录血糖、测算碳水、查看食谱与每周趋势。</text>
+      <view class="hero-badge">控糖日常 · 温柔一点</view>
+      <text class="hero-title">把血糖、饮食和每周变化放在同一个小本子里</text>
+      <text class="hero-copy">记录不用复杂，关键是每天都能看懂自己。今天从一条血糖或一顿饭开始。</text>
+      <view class="hero-pills">
+        <text>血糖趋势</text>
+        <text>碳水测算</text>
+        <text>降糖食谱</text>
+      </view>
     </view>
 
-    <view class="panel">
+    <view class="panel auth-card">
       <view class="tabs">
         <text :class="['tab', mode === 'login' ? 'active' : '']" @tap="mode = 'login'">登录</text>
         <text :class="['tab', mode === 'register' ? 'active' : '']" @tap="mode = 'register'">注册</text>
@@ -47,10 +53,13 @@
 
       <view class="submit">
         <wd-button type="primary" block @click="submit">
-          {{ mode === 'login' ? '登录' : '注册并登录' }}
+          {{ mode === 'login' ? '进入今日看板' : '注册并进入' }}
         </wd-button>
       </view>
-      <text class="demo subtle">演示账号：demo_patient / 123456</text>
+      <view class="demo-box" @tap="useDemo">
+        <text class="demo-title">使用演示账号</text>
+        <text class="demo-text">demo_patient / 123456</text>
+      </view>
     </view>
   </view>
 </template>
@@ -72,6 +81,13 @@ const form = reactive({
   diabetesType: ''
 })
 
+function useDemo() {
+  mode.value = 'login'
+  form.username = 'demo_patient'
+  form.password = '123456'
+  uni.showToast({ title: '已填入演示账号', icon: 'none' })
+}
+
 async function submit() {
   if (!form.username || !form.password) {
     uni.showToast({ title: '请填写用户名和密码', icon: 'none' })
@@ -88,40 +104,118 @@ async function submit() {
 
 <style scoped>
 .auth-page {
-  padding-top: 86rpx;
+  padding-top: 72rpx;
 }
 .hero {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: 430rpx;
+  margin-bottom: 28rpx;
+  padding: 42rpx 34rpx;
+  border-radius: 42rpx;
+  background:
+    linear-gradient(135deg, rgba(255, 246, 230, 0.96), rgba(229, 242, 225, 0.92)),
+    radial-gradient(circle at 86% 18%, rgba(225, 135, 55, 0.28), transparent 30%);
+  box-shadow: 0 22rpx 58rpx rgba(121, 104, 72, 0.12);
+}
+.hero::after {
+  position: absolute;
+  right: -46rpx;
+  bottom: -34rpx;
+  width: 230rpx;
+  height: 230rpx;
+  border: 28rpx solid rgba(118, 151, 103, 0.18);
+  border-radius: 50%;
+  content: '';
+}
+.hero-badge {
+  display: inline-flex;
+  padding: 10rpx 18rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.72);
+  color: #b86a19;
+  font-size: 23rpx;
+  font-weight: 900;
+}
+.hero-title {
+  display: block;
+  margin-top: 26rpx;
+  max-width: 600rpx;
+  color: #26382a;
+  font-size: 46rpx;
+  font-weight: 900;
+  line-height: 1.22;
+}
+.hero-copy {
+  display: block;
+  margin-top: 18rpx;
+  max-width: 560rpx;
+  color: #687664;
+  font-size: 27rpx;
+  line-height: 1.65;
+}
+.hero-pills {
   display: flex;
-  flex-direction: column;
-  gap: 16rpx;
-  margin-bottom: 42rpx;
+  flex-wrap: wrap;
+  gap: 14rpx;
+  margin-top: 28rpx;
+}
+.hero-pills text {
+  padding: 10rpx 16rpx;
+  border-radius: 999rpx;
+  background: rgba(255, 255, 255, 0.74);
+  color: #557956;
+  font-size: 23rpx;
+  font-weight: 800;
+}
+.auth-card {
+  padding: 32rpx;
 }
 .tabs {
-  display: flex;
-  gap: 18rpx;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16rpx;
   margin-bottom: 18rpx;
+  padding: 8rpx;
+  border-radius: 24rpx;
+  background: #f4efe6;
 }
 .tab {
-  flex: 1;
   height: 72rpx;
-  border-radius: 12rpx;
-  background: #f2f4f7;
-  color: #667085;
+  border-radius: 18rpx;
+  color: #7a836f;
   text-align: center;
   line-height: 72rpx;
   font-size: 28rpx;
+  font-weight: 800;
 }
 .tab.active {
-  background: #d9f5ef;
-  color: #0f766e;
-  font-weight: 700;
+  background: #ffffff;
+  color: #4f7f53;
+  box-shadow: 0 10rpx 26rpx rgba(88, 105, 76, 0.1);
 }
 .submit {
-  margin-top: 30rpx;
+  margin-top: 32rpx;
 }
-.demo {
-  display: block;
-  margin-top: 18rpx;
+.demo-box {
+  margin-top: 22rpx;
+  padding: 20rpx;
+  border-radius: 22rpx;
+  background: #fff6e8;
   text-align: center;
+}
+.demo-title {
+  display: block;
+  color: #8a6741;
+  font-size: 24rpx;
+  font-weight: 900;
+}
+.demo-text {
+  display: block;
+  margin-top: 4rpx;
+  color: #c97827;
+  font-size: 25rpx;
+  font-weight: 800;
 }
 </style>

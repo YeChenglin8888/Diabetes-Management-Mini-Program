@@ -52,6 +52,23 @@ export function buildCarbChart(report) {
   }
 }
 
+export function buildNutritionChart(report) {
+  return {
+    categories: ['碳水', '蛋白', '脂肪', '纤维'],
+    series: [
+      {
+        name: '营养',
+        data: [
+          Number(report?.totalCarb || 0),
+          Number(report?.totalProtein || 0),
+          Number(report?.totalFat || 0),
+          Number(report?.totalFiber || 0)
+        ]
+      }
+    ]
+  }
+}
+
 export function recipeTags(recipe = {}) {
   const tags = []
   if (recipe.mealType) tags.push(recipe.mealType)

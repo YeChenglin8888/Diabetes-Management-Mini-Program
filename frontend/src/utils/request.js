@@ -1,4 +1,4 @@
-const BASE_URL = 'http://127.0.0.1:8000/api'
+const BASE_URL = 'http://10.43.55.13:8000/api'
 
 export function getCurrentUser() {
   return uni.getStorageSync('currentUser') || null
